@@ -1,0 +1,3 @@
+value: i64 = 128;
+print("before");
+print(i8(value));
