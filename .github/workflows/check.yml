@@ -1,0 +1,30 @@
+name: Fracta checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: fracta
+      - uses: actions/checkout@v4
+        with:
+          repository: Cerune-Lang/Cerune
+          ref: master
+          path: cerune
+      - uses: dtolnay/rust-toolchain@1.98.0
+      - name: Build Cerune
+        working-directory: cerune
+        run: cargo build --locked --bin cerune
+      - name: Check Fracta sample
+        run: cerune/target/debug/cerune check fracta/cases/checked_overflow.ceru
