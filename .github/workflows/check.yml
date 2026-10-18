@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  smoke:
+  safety-fixtures:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -22,9 +22,12 @@ jobs:
           repository: Cerune-Lang/Cerune
           ref: master
           path: cerune
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@1.98.0
       - name: Build Cerune
         working-directory: cerune
         run: cargo build --locked --bin cerune
-      - name: Check Fracta sample
-        run: cerune/target/debug/cerune check fracta/cases/checked_overflow.ceru
+      - name: Test trap checker
+        run: python3 -m unittest discover -s fracta/tests -v
+      - name: Verify safe runtime traps
+        run: python3 fracta/scripts/check_traps.py --binary cerune/target/debug/cerune --cases fracta/cases
