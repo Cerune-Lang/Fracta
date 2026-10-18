@@ -1,0 +1,18 @@
+{
+  "checked_overflow": {
+    "code": "integer-overflow",
+    "stdout": ""
+  },
+  "division_by_zero": {
+    "code": "division-by-zero",
+    "stdout": "before\n"
+  },
+  "out_of_bounds": {
+    "code": "array-index-out-of-bounds",
+    "stdout": "before\n"
+  },
+  "conversion_out_of_range": {
+    "code": "integer-conversion-out-of-range",
+    "stdout": "before\n"
+  }
+}
